@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      <meta charset="UTF-8">
+      <title>Questions</title>
+   </head>
+   <body>
+      {% for q in results %}
+      <form onsubmit="return replace();" action="#" method="#" id="{{q._id}}">
+         <h3>{{ q.question }}</h3>
+         <input type="hidden" name="id" id="{{ q._id}}" value="{{q._id}}" />
+         <input type="hidden" name="answ" id="{{ q._id}}" value="{{q.bin_answ}}" />
+         <input type="hidden" name="checkedStr" id="{{ q._id}}" value=""/>
+         <div>
+            <script>
+               function replace(){
+               if(document.getElementById("{{ q._id}}-A").checked) {
+                   document.getElementById('{{ q._id}}-HA').disabled = true;
+                                           }
+               if(document.getElementById("{{ q._id}}-B").checked) {
+                   document.getElementById('{{ q._id}}-HB').disabled = true;
+                                           }
+               if(document.getElementById("{{ q._id}}-C").checked) {
+                   document.getElementById('{{ q._id}}-HC').disabled = true;
+                                           }
+                       var form = document.getElementById("{{q._id}}");
+                       submitFn()
+               
+                   function submitFn() {
+                       //event.preventDefault();
+                       var boxes = document.getElementsByClassName('checkbox');
+                       console.log(boxes)
+                       //console.log(boxes)
+                       var checked = [];
+                       for(var i=0; boxes[i]; ++i){
+                           console.log(boxes[i])
+                           //!boxes[i].disabled == true
+                       if(boxes[i].checked || (boxes[i].type == 'hidden' && !boxes[i].disabled == true)){
+                           checked.push(boxes[i].value);
+                       }
+                       }
+                       var checkedStr = checked.join('');
+                       //alert(checkedStr);
+                       document.getElementsByName('checkedStr')[0].value=checkedStr;
+                       SubForm()
+               
+                       return '';
+                   }
+                   function SubForm(){
+               $.ajax({
+               url: '/res',
+               type: 'post',
+               data: $('form').serialize(),
+               success: function(){
+                   alert("worked");
+                   console.log("hi")
+               }
+               });
+               }
+                   }
+            </script>
+            <script></script>
+            <input class="checkbox" type="hidden" name="{{ q._id}}_A" id="{{ q._id}}-HA" value="0" />
+            <input class="checkbox" type="checkbox" name="{{ q._id}}_A" id="{{ q._id}}-A" value="1" />
+            <label for="{{ q._id}}-A">{{ q.answ_one }} </label>
+         </div>
+         <div>
+            <input class="checkbox" type="hidden" name="{{ q._id}}_B" id="{{ q._id}}-HB" value="0" />
+            <input class="checkbox" type="checkbox" name="{{ q._id}}_B" id="{{ q._id}}-B" value="1" />
+            <label for="{{ q._id}}-B">{{ q.answ_two }}</label>
+         </div>
+         <div>
+            <input class="checkbox" type="hidden" name="{{ q._id}}_C" id="{{ q._id}}-HC" value="0" />
+            <input class="checkbox" type="checkbox" name="{{ q._id}}_C" id="{{ q._id}}-C" value="1" />
+            <label for="{{ q._id}}-C">{{ q.answ_three }}</label>
+         </div>
+         {% endfor %}
+         <p>
+         <p>
+            <input type="submit" value="Next"></input>
+      </p>
+</form>
+   </body>
+</html>
