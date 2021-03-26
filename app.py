@@ -77,4 +77,5 @@ def hello_world():
 if __name__ == "__main__":
     # db.create_all()
     db = Database()
-    app.run(debug=True)
+    #app.run(debug=True)
+    app.run()
