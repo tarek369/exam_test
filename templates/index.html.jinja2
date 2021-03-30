@@ -63,7 +63,7 @@
             <img src="/static/img/{{ q.picture }}.jpg"/>
         {% endif %}
 
-        <div class="question" id="{{ q._id }}"/>
+        <div class="question" id="{{ q._id }}">
         <div class="ansW">{{ q.bin_answ }}</div>
         <input type="hidden" name="answ" id="{{ q._id }}" value="{{ q.bin_answ }}"/>
         <input type="hidden" name="checkedStr" id="{{ q._id }}" value=""/>
@@ -87,6 +87,7 @@
                 <input class="checkbox" type="checkbox" name="{{ q._id }}_C" id="{{ q._id }}-C" value="1"/>
                 <label for="{{ q._id }}-C">{{ q.answ_three }}</label>
             </div>
+        </div>
         </div>
     {% endfor %}
 
